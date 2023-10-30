@@ -99,6 +99,25 @@ body {
     opacity: .5;
 }
 
+#btn {
+    background-color: white;
+    outline: none;
+    border: 1px solid black;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+#btn:hover {
+    background-color: rgb(40, 40, 40);
+    color: white;
+    border: 1px solid white;
+}
+
 @keyframes shake {
     0% {
         transform: translate(-45%, -50%);

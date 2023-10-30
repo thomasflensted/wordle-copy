@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     }
+
+    const reloadBtn = document.getElementById("btn");
+    reloadBtn.addEventListener("click", () => {
+        location.reload();
+    })
 });
 
 function disableRow(row) {

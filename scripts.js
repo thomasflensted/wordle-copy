@@ -1,5 +1,4 @@
-
-const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS"];
+const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -62,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     reloadBtn.addEventListener("click", () => {
         location.reload();
     })
+
 });
 
 function disableRow(row) {
@@ -83,13 +83,16 @@ function updateResult(won) {
 
 function paintTiles(userWord, row, lastTileID) {
 
+    let duplicateWord = WORD;
     let correctTiles = 0;
     for (let i = 0; i < userWord.length; i++) {
         if (userWord[i] == WORD[i]) {
             row[i].classList.add("letter-correct-spot");
+            duplicateWord = duplicateWord.replace(userWord[i], "");
             correctTiles++;
-        } else if (WORD.includes(userWord[i])) {
+        } else if (WORD.includes(userWord[i]) && duplicateWord.includes(userWord[i])) {
             row[i].classList.add("letter-not-correct-spot");
+            duplicateWord = duplicateWord.replace(userWord[i], "");
         } else {
             row[i].classList.add("letter-not-included");
         }

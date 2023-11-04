@@ -76,7 +76,7 @@ function updateResult(won) {
         resultHeading.innerHTML = "You got it!";
         resultHeading.classList.add("correct-result");
     } else {
-        resultHeading.innerHTML = "Almost there. Better luck next time!";
+        resultHeading.innerHTML = "Better luck next time";
         resultHeading.classList.add("wrong-result");
     }
 }

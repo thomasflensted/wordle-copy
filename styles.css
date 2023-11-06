@@ -19,7 +19,7 @@ body {
     gap: var(--gap);
 }
 
-.row {
+.tile-row {
     display: grid;
     grid-template-columns: repeat(5, var(--tileSize));
     gap: var(--gap);
@@ -46,7 +46,9 @@ body {
     margin: 4rem 0 4rem 0;
     display: flex;
     justify-content: center;
+    text-align: center;
     font-size: 3rem;
+    color: #2f3542;
 }
 
 .correct-result {
@@ -116,6 +118,38 @@ body {
     background-color: rgb(40, 40, 40);
     color: white;
     border: 1px solid white;
+}
+
+.about-btn {
+    margin: 0;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: 2px solid gray;
+    padding: .6rem 1rem;
+    border-radius: 50%;
+    color: gray;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.about-btn:hover {
+    color: rgb(240, 240, 240);
+    background: gray;
+}
+
+.about {
+    width: 20%;
+    background: rgb(255, 255, 255);
+    font-size: 1.5rem;
+    border-radius: 10px;
+    line-height: 3rem;
+    padding: 1rem;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 @keyframes shake {

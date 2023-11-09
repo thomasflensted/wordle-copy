@@ -1,6 +1,8 @@
 :root {
-    --tileSize: 75px;
-    --gap: 5px;
+    --tileSize: 60px;
+    --gap: 3px;
+    --corner: 5px;
+    --border: 1px solid black;
 }
 
 html {
@@ -10,7 +12,7 @@ html {
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
-    background: rgb(240, 240, 240);
+    /*background: rgb(240, 240, 240);*/
 }
 
 .tile-container {
@@ -28,22 +30,25 @@ body {
 .tile {
     width: var(--tileSize);
     height: var(--tileSize);
-    border-radius: 10px;
-    border: 2px solid black;
-    outline: 0;
+    border-radius: var(--corner);
+    border: var(--border);
     text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
     box-sizing: border-box;
-    transition: transform .1s ease;
+    font-size: 1.5rem;
+    line-height: var(--tileSize);
+    font-weight: 500;
+}
+
+.board-tile {
+    outline: 0;
 }
 
 .tile:hover {
-    transform: scale(1.025);
+    cursor: pointer;
 }
 
 .heading {
-    margin: 4rem 0 4rem 0;
+    margin: 5rem 0 5rem 0;
     display: flex;
     justify-content: center;
     text-align: center;
@@ -150,6 +155,29 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.keyboard {
+    margin-top: 8rem;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+}
+
+.key-tile {
+    margin: .1rem;
+}
+
+.clicked {
+    transform: scale(.95);
+    background: #f5f6fa;
+}
+
+.key-tile:hover {
+    cursor: pointer;
+    background-color: #f5f6fa;
 }
 
 @keyframes shake {

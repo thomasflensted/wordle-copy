@@ -21,47 +21,85 @@
     -->
     <h1 class="heading">Wordle</h1>
     <div class="tile-container">
-        <div class="tile-row">
-            <input id="1" class="tile" type="text" maxlength="1" autofocus autocomplete="off">
-            <input id="2" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="3" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="4" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="5" class="tile" type="text" maxlength="1" disabled autocomplete="off">
+        <div id="row-1" class="tile-row">
+            <div id="1" class="tile board-tile"></div>
+            <div id="2" class="tile board-tile"></div>
+            <div id="3" class="tile board-tile"></div>
+            <div id="4" class="tile board-tile"></div>
+            <div id="5" class="tile board-tile"></div>
         </div>
-        <div class="tile-row">
-            <input id="6" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="7" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="8" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="9" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="10" class="tile" type="text" maxlength="1" disabled autocomplete="off">
+        <div id="row-2" class="tile-row">
+            <div id="6" class="tile board-tile"></div>
+            <div id="7" class="tile board-tile"></div>
+            <div id="8" class="tile board-tile"></div>
+            <div id="9" class="tile board-tile"></div>
+            <div id="10" class="tile board-tile"></div>
         </div>
-        <div class="tile-row">
-            <input id="11" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="12" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="13" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="14" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="15" class="tile" type="text" maxlength="1" disabled autocomplete="off">
+        <div id="row-3" class="tile-row">
+            <div id="11" class="tile board-tile"></div>
+            <div id="12" class="tile board-tile"></div>
+            <div id="13" class="tile board-tile"></div>
+            <div id="14" class="tile board-tile"></div>
+            <div id="15" class="tile board-tile"></div>
         </div>
-        <div class="tile-row">
-            <input id="16" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="17" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="18" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="19" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="20" class="tile" type="text" maxlength="1" disabled autocomplete="off">
+        <div id="row-4" class="tile-row">
+            <div id="16" class="tile board-tile"></div>
+            <div id="17" class="tile board-tile"></div>
+            <div id="18" class="tile board-tile"></div>
+            <div id="19" class="tile board-tile"></div>
+            <div id="20" class="tile board-tile"></div>
         </div>
-        <div class="tile-row">
-            <input id="21" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="22" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="23" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="24" class="tile" type="text" maxlength="1" disabled autocomplete="off">
-            <input id="25" class="tile" type="text" maxlength="1" disabled autocomplete="off">
+        <div id="row-5" class="tile-row">
+            <div id="21" class="tile board-tile"></div>
+            <div id="22" class="tile board-tile"></div>
+            <div id="23" class="tile board-tile"></div>
+            <div id="24" class="tile board-tile"></div>
+            <div id="25" class="tile board-tile"></div>
         </div>
     </div>
-    <h1 id="result" class="heading"></h1>
+
+    <div class="keyboard">
+        <div class="keyboard-row">
+            <div class="key-tile tile">Q</div>
+            <div class="key-tile tile">W</div>
+            <div class="key-tile tile">E</div>
+            <div class="key-tile tile">R</div>
+            <div class="key-tile tile">T</div>
+            <div class="key-tile tile">Y</div>
+            <div class="key-tile tile">U</div>
+            <div class="key-tile tile">I</div>
+            <div class="key-tile tile">O</div>
+            <div class="key-tile tile">P</div>
+        </div>
+
+        <div class="keyboard-row">
+            <div class="key-tile tile">A</div>
+            <div class="key-tile tile">S</div>
+            <div class="key-tile tile">D</div>
+            <div class="key-tile tile">F</div>
+            <div class="key-tile tile">G</div>
+            <div class="key-tile tile">H</div>
+            <div class="key-tile tile">J</div>
+            <div class="key-tile tile">K</div>
+            <div class="key-tile tile">L</div>
+        </div>
+
+        <div class="keyboard-row">
+            <div class="key-tile tile">Z</div>
+            <div class="key-tile tile">X</div>
+            <div class="key-tile tile">C</div>
+            <div class="key-tile tile">V</div>
+            <div class="key-tile tile">B</div>
+            <div class="key-tile tile">N</div>
+            <div class="key-tile tile">M</div>
+        </div>
+    </div>
+
     <div class="not-enough-container">
         <h2>Not enough letters</h2>
     </div>
     <button id="btn">Let Me Try Again With A New Word</button>
+
 </body>
 
 </html>

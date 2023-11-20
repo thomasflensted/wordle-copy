@@ -68,18 +68,35 @@ body {
     color: white;
     border: 0 !important;
     background-color: #27ae60;
+    animation: checkLetterAnimation .2s;
 }
 
 .letter-not-correct-spot {
     color: white;
     border: 0 !important;
     background-color: #ff9f43;
+    animation: checkLetterAnimation .2s;
 }
 
 .letter-not-included {
     color: white;
     border: 0 !important;
     background-color: #999999;
+    animation: checkLetterAnimation .2s;
+}
+
+@keyframes checkLetterAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .not-enough-container {
@@ -88,7 +105,7 @@ body {
     color: white;
     padding: .5rem 2.5rem;
     border-radius: 10px;
-    top: 36.75%;
+    top: 36.25%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: shake .25s;
@@ -106,20 +123,17 @@ body {
     opacity: .5;
 }
 
-#btn {
-    background-color: white;
+.btn {
+    background: none;
     outline: none;
     border: 1px solid black;
-    padding: 1rem 2rem;
-    border-radius: 10px;
-    position: absolute;
-    left: 50%;
-    bottom: 5px;
-    transform: translate(-50%, -50%);
+    padding: .75rem 2rem;
+    border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 1.5rem;
 }
 
-#btn:hover {
+.btn:hover {
     background-color: rgb(40, 40, 40);
     color: white;
     border: 1px solid white;
@@ -129,9 +143,9 @@ body {
     margin: 0;
     position: absolute;
     top: 20px;
-    right: 20px;
+    left: 20px;
     border: 2px solid gray;
-    padding: .6rem 1rem;
+    padding: .4rem .8rem;
     border-radius: 50%;
     color: gray;
     font-size: 1.5rem;
@@ -143,18 +157,72 @@ body {
     background: gray;
 }
 
+.opaque-cover {
+    width: 100%;
+    height: 100vh;
+    background: rgb(250 250 250 / 85%);
+    z-index: 100;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.about-bg {
+    display: none;
+}
+
+.game-over-bg {
+    display: none;
+}
+
 .about {
-    width: 20%;
-    background: rgb(255, 255, 255);
+    width: 30%;
+    border: 1px solid black;
+    background: rgb(255, 255, 255, .75);
     font-size: 1.5rem;
     border-radius: 10px;
-    line-height: 3rem;
-    padding: 1rem;
+    line-height: 3.5rem;
+    padding: 1rem 2rem;
     position: absolute;
-    top: 35%;
+    top: 36%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    animation: slide-up ease .25s;
+}
+
+.game-over-message {
+    font-size: 3rem;
+}
+
+.game-over {
+    text-align: center;
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: slide-up ease .25s;
+}
+
+@keyframes slide-up {
+    from {
+        top: 40%;
+    }
+
+    to {
+        top: 36%;
+    }
+}
+
+p {
+    width: 85%;
+    margin: 2rem auto;
+    text-align: justify;
+}
+
+a {
+    color: black;
 }
 
 .keyboard {
@@ -175,9 +243,38 @@ body {
     background: #f5f6fa;
 }
 
-.key-tile:hover {
+.key-tile:not(.letter-not-included):hover {
     cursor: pointer;
     background-color: #f5f6fa;
+}
+
+.darkmode-btn {
+    background-color: rgb(181, 181, 181);
+    width: 32px;
+    height: 20px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 10px;
+}
+
+.darkmode-slider {
+    background: white;
+    height: 16px;
+    width: 16px;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+}
+
+.darkmode-btn:hover {
+    cursor: pointer;
+}
+
+.darkmode-slider:hover {
+    left: 14px;
 }
 
 @keyframes shake {

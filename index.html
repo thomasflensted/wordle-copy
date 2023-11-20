@@ -7,18 +7,34 @@
     <title>Wordle</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js"></script>
+    <script src="https://kit.fontawesome.com/4c464b1cf5.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <h1 class="about-btn">?</h1>
-    <!--
-    <div class="about">
-        <p>
-            A made this clone of the New York Times' popular word game, Wordle, to practice my programming skills. All
-            credit goes to The New York Times and Josh Wardle.
-        </p>
+    <div id="darkmode" class="darkmode-btn">
+        <div class="darkmode-slider"></div>
     </div>
-    -->
+    <h1 id="about-btn" class="about-btn">?</h1>
+    <div id="about-bg" class="opaque-cover about-bg">
+        <div class="about">
+            <p>
+                A made this replica of the New York Times' popular word game,
+                <a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">Wordle</a>,
+                to practice my programming skills. All credit for the game goes to The New York Times and
+                <a href="https://www.nytimes.com/2022/01/03/technology/wordle-word-game-creator.html"
+                    target="_blank">Josh Wardle</a>.
+                Check out some of my other projects
+                <a href="https://github.com/thomasflensted" target="_blank">here</a>.
+            </p>
+            <button id="close-btn" class="btn">Close</button>
+        </div>
+    </div>
+    <div id="game-over-screen" class="opaque-cover game-over-bg">
+        <div class="game-over">
+            <h1 id="game-over-message" class="game-over-message"></h1>
+            <button id="try-again" class="btn">Try Again</button>
+        </div>
+    </div>
     <h1 class="heading">Wordle</h1>
     <div class="tile-container">
         <div id="row-1" class="tile-row">
@@ -92,13 +108,13 @@
             <div class="key-tile tile">B</div>
             <div class="key-tile tile">N</div>
             <div class="key-tile tile">M</div>
+            <div id="backspace" class="key-tile tile"><i class="fa-solid fa-delete-left"></i></div>
         </div>
     </div>
 
     <div class="not-enough-container">
         <h2>Not enough letters</h2>
     </div>
-    <button id="btn">Let Me Try Again With A New Word</button>
 
 </body>
 

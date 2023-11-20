@@ -238,7 +238,7 @@ a {
     margin: .1rem;
 }
 
-.clicked {
+.clicked:not(.letter-not-included) {
     transform: scale(.95);
     background: #f5f6fa;
 }

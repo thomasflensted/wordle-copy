@@ -1,7 +1,7 @@
 :root {
     --tileSize: 60px;
     --gap: 3px;
-    --corner: 5px;
+    --corner: 3px;
     --border: 1px solid black;
 }
 

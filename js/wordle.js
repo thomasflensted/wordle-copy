@@ -66,13 +66,13 @@ for (let i = 0; i < keyBoardButtons.length; i++) {
 function finishGame(gameWon, totalUserActions) {
     if (gameWon) {
         setTimeout(() => {
-            displayGameOverMessage("Yay! You guessed it!");
+            displayGameOverMessage("Yay! You guessed it!", "");
             return true;
         }, 750);
     } else {
         if (totalUserActions == 25) {
             setTimeout(() => {
-                displayGameOverMessage("Better luck next time!");
+                displayGameOverMessage("Better luck next time!", WORD);
                 return true;
             }, 750);
         }
@@ -104,8 +104,9 @@ function handleBackSpace(userWord, totalUserActions) {
     return userWord;
 }
 
-function displayGameOverMessage(msg) {
-    document.getElementById("game-over-message").innerHTML = msg;
+function displayGameOverMessage(msg, word) {
+
+    document.getElementById("game-over-message").innerHTML = word ? msg + "<br>The word was " + word + "." : msg;
     document.getElementById("game-over-screen").style.display = "block";
 }
 
@@ -134,8 +135,7 @@ function paintTiles(tileRow, userWord, buttons) {
         }, i * 100);
     }
 
-    if (WORD == userWord) return true;
-    return false;
+    return WORD == userWord;
 
 }
 

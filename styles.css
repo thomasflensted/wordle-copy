@@ -27,8 +27,15 @@ body {
     gap: var(--gap);
 }
 
-.tile {
+.small-tile {
     width: var(--tileSize);
+}
+
+.big-tile {
+    width: 80px;
+}
+
+.tile {
     height: var(--tileSize);
     border-radius: var(--corner);
     border: var(--border);
@@ -236,6 +243,11 @@ a {
 
 .key-tile {
     margin: .1rem;
+}
+
+#enter {
+    font-size: 1.25rem !important;
+    letter-spacing: .1rem;
 }
 
 .clicked:not(.letter-not-included) {

@@ -1,73 +1,105 @@
 const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 
-const keyButtons = document.getElementsByClassName("key-tile");
-var userWord = "";
-var totalUserActions = 0;
+const keyBoardButtons = document.getElementsByClassName("key-tile"); // all keyboard buttons
+var userWord = ""; // letters clicked by user is appended to this string
+var totalUserActions = 0; // this counter keeps track of the board tile the user is currently at
 
 document.body.addEventListener("keydown", function handleKeyDown(e) {
 
-    const key = e.key.toUpperCase();
+    // extract and capitalise character from keydown event
+    const letter = e.key.toUpperCase();
 
-    if (keyIsLetter(key) && userWord.length < 5) {
-        userWord += key;
+    // handle letter
+    if (keyIsLetter(letter) && userWord.length < 5) {
         totalUserActions++;
-        const currentBoardTile = getCurrentTile(totalUserActions);
-        const letterButton = getCorrectLetterButton(key, keyButtons);
-        animateButtonClick(letterButton);
-        updateTile(currentBoardTile, key);
+        userWord = handleLetter(userWord, letter, keyBoardButtons, totalUserActions);
     }
 
-    if (key == "BACKSPACE" && userWord.length > 0) {
-        const currentBoardTile = getCurrentTile(totalUserActions);
-        userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
+    // handle backspace
+    if (letter == "BACKSPACE" && userWord.length > 0) {
+        userWord = handleBackSpace(userWord, totalUserActions)
         totalUserActions--;
     }
 
-    if (key == "ENTER") {
+    // handle enter
+    if (letter == "ENTER") {
         if (userWord.length < 5) {
             displayNotEnoughWarning();
         } else {
-            const currentTile = getCurrentTile(totalUserActions);
-            const tileRow = currentTile.parentElement.children;
-            const gameWon = paintTiles(tileRow, userWord, keyButtons);
-            if (gameWon) {
-                setTimeout(() => {
-                    displayGameOverMessage("Yay! You guessed it!");
-                }, 750);
-            } else {
-                if (totalUserActions == 25) {
-                    setTimeout(() => {
-                        displayGameOverMessage("Better luck next time!");
-                    }, 750);
-                } else {
-                    userWord = "";
-                }
-            }
+            const gameWon = handleEnter(totalUserActions, userWord, keyBoardButtons);
+            const gameOver = finishGame(gameWon, totalUserActions, userWord);
+            if (!gameOver) userWord = "";
         }
     }
 });
 
-for (let i = 0; i < keyButtons.length; i++) {
-    keyButtons[i].addEventListener("click", function handleMouseClick(e) {
+for (let i = 0; i < keyBoardButtons.length; i++) {
+    keyBoardButtons[i].addEventListener("click", function handleMouseClick(e) {
 
-        const key = e.target.innerHTML;
+        const letter = e.target.innerHTML;
+
+        if (keyIsLetter(letter) && userWord.length < 5) {
+            totalUserActions++;
+            userWord = handleLetter(userWord, letter, keyBoardButtons, totalUserActions);
+        }
+
+        if (letter == "ENTER") {
+            if (userWord.length < 5) {
+                displayNotEnoughWarning();
+            } else {
+                const gameWon = handleEnter(totalUserActions, userWord, keyBoardButtons);
+                const gameOver = finishGame(gameWon, totalUserActions, userWord);
+                if (!gameOver) userWord = "";
+            }
+        }
 
         if (e.target.id == "backspace") {
             if (userWord.length > 0) {
-                const currentBoardTile = document.getElementById(userWord.length);
-                userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
+                userWord = handleBackSpace(userWord, totalUserActions);
                 totalUserActions--;
             }
-        } else if (userWord.length < 5) {
-            userWord += key;
-            totalUserActions++;
-            const currentBoardTile = getCurrentTile(totalUserActions);
-            const letterButton = getCorrectLetterButton(key, keyButtons);
-            animateButtonClick(letterButton);
-            updateTile(currentBoardTile, key);
         }
     })
+}
+
+function finishGame(gameWon, totalUserActions) {
+    if (gameWon) {
+        setTimeout(() => {
+            displayGameOverMessage("Yay! You guessed it!");
+            return true;
+        }, 750);
+    } else {
+        if (totalUserActions == 25) {
+            setTimeout(() => {
+                displayGameOverMessage("Better luck next time!");
+                return true;
+            }, 750);
+        }
+    }
+    return false;
+}
+
+function handleEnter(totalUserActions, userWord, keyBoardButtons) {
+    const currentTile = document.getElementById(totalUserActions); // all tiles have IDs numbered 1-25 in the HTML
+    const tileRow = currentTile.parentElement.children; // get all tiles in current row. parent is the row, so children are all tiles in the row
+    const gameWon = paintTiles(tileRow, userWord, keyBoardButtons); // check userWord agaainst WORD and return true if they are the same, else return false
+    return gameWon;
+}
+
+function handleLetter(userWord, letter, keyBoardButtons, totalUserActions) {
+    userWord += letter; // append letter to word guessed by user
+    const currentBoardTile = document.getElementById(totalUserActions); // all tiles have IDs numbered 1-25 in the HTML
+    const keyboardButton = getCorrectLetterButton(letter, keyBoardButtons); // find the keyboard button corresponding to the letter clicked by user
+    animateButtonClick(keyboardButton); // use the element found above to animate click
+    updateBoardTile(currentBoardTile, letter); // update the board tile with the letter clicked
+    return userWord;
+}
+
+function handleBackSpace(userWord, totalUserActions) {
+    const currentBoardTile = document.getElementById(totalUserActions);
+    userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
+    return userWord;
 }
 
 function displayGameOverMessage(msg) {
@@ -120,10 +152,6 @@ function deleteLetterFromTileAndUpdateWord(currentTile, word) {
     return word.substring(0, word.length - 1);
 }
 
-function getCurrentTile(num) {
-    return document.getElementById(num);
-}
-
 function getCurrentRow(num) {
     const rowID = document.getElementById(num).parentElement.id;
     return parseInt(rowID.charAt(rowID.length - 1));
@@ -136,7 +164,7 @@ function animateBoardTile(tile) {
     }, 100);
 }
 
-function updateTile(tile, val) {
+function updateBoardTile(tile, val) {
     tile.innerHTML = val;
     animateBoardTile(tile);
 }

@@ -1,17 +1,65 @@
 const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 
-document.addEventListener("DOMContentLoaded", () => {
+const keyButtons = document.getElementsByClassName("key-tile");
+var userWord = "";
+var totalUserActions = 0;
 
-    const keyButtons = document.getElementsByClassName("key-tile");
-    var userWord = "";
-    var totalUserActions = 0;
+document.body.addEventListener("keydown", function handleKeyDown(e) {
 
-    document.body.addEventListener("keydown", function handleKeyDown(e) {
+    const key = e.key.toUpperCase();
 
-        const key = e.key.toUpperCase();
+    if (keyIsLetter(key) && userWord.length < 5) {
+        userWord += key;
+        totalUserActions++;
+        const currentBoardTile = getCurrentTile(totalUserActions);
+        const letterButton = getCorrectLetterButton(key, keyButtons);
+        animateButtonClick(letterButton);
+        updateTile(currentBoardTile, key);
+    }
 
-        if (keyIsLetter(key) && userWord.length < 5) {
+    if (key == "BACKSPACE" && userWord.length > 0) {
+        const currentBoardTile = getCurrentTile(totalUserActions);
+        userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
+        totalUserActions--;
+    }
+
+    if (key == "ENTER") {
+        if (userWord.length < 5) {
+            displayNotEnoughWarning();
+        } else {
+            const currentTile = getCurrentTile(totalUserActions);
+            const tileRow = currentTile.parentElement.children;
+            const gameWon = paintTiles(tileRow, userWord, keyButtons);
+            if (gameWon) {
+                setTimeout(() => {
+                    displayGameOverMessage("Yay! You guessed it!");
+                }, 750);
+            } else {
+                if (totalUserActions == 25) {
+                    setTimeout(() => {
+                        displayGameOverMessage("Better luck next time!");
+                    }, 750);
+                } else {
+                    userWord = "";
+                }
+            }
+        }
+    }
+});
+
+for (let i = 0; i < keyButtons.length; i++) {
+    keyButtons[i].addEventListener("click", function handleMouseClick(e) {
+
+        const key = e.target.innerHTML;
+
+        if (e.target.id == "backspace") {
+            if (userWord.length > 0) {
+                const currentBoardTile = document.getElementById(userWord.length);
+                userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
+                totalUserActions--;
+            }
+        } else if (userWord.length < 5) {
             userWord += key;
             totalUserActions++;
             const currentBoardTile = getCurrentTile(totalUserActions);
@@ -19,61 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
             animateButtonClick(letterButton);
             updateTile(currentBoardTile, key);
         }
-
-        if (key == "BACKSPACE" && userWord.length > 0) {
-            const currentBoardTile = getCurrentTile(totalUserActions);
-            userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
-            totalUserActions--;
-        }
-
-        if (key == "ENTER") {
-            if (userWord.length < 5) {
-                displayNotEnoughWarning();
-            } else {
-                const currentTile = getCurrentTile(totalUserActions);
-                const tileRow = currentTile.parentElement.children;
-                const gameWon = paintTiles(tileRow, userWord, keyButtons);
-                if (gameWon) {
-                    displayGameOverMessage("Yay! You guessed it!");
-                } else {
-                    if (totalUserActions == 25) {
-                        displayGameOverMessage("Better luck next time!");
-                    } else {
-                        userWord = "";
-                    }
-                }
-            }
-        }
     })
-
-    for (let i = 0; i < keyButtons.length; i++) {
-        keyButtons[i].addEventListener("click", function handleMouseClick(e) {
-
-            const key = e.target.innerHTML;
-
-            if (e.target.id == "backspace") {
-                if (userWord.length > 0) {
-                    const currentBoardTile = document.getElementById(userWord.length);
-                    userWord = deleteLetterFromTileAndUpdateWord(currentBoardTile, userWord);
-                    totalUserActions--;
-                }
-            } else if (userWord.length < 5) {
-                userWord += key;
-                totalUserActions++;
-                const currentBoardTile = getCurrentTile(totalUserActions);
-                const letterButton = getCorrectLetterButton(key, keyButtons);
-                animateButtonClick(letterButton);
-                updateTile(currentBoardTile, key);
-            }
-        })
-    }
-
-    document.getElementById("about-btn").addEventListener("click", displayAboutDialogue);
-    document.getElementById("try-again").addEventListener("click", () => {
-        location.reload();
-    });
-
-});
+}
 
 function displayGameOverMessage(msg) {
     document.getElementById("game-over-message").innerHTML = msg;
@@ -102,20 +97,12 @@ function paintTiles(tileRow, userWord, buttons) {
                     keyButton.classList.add("letter-not-included");
                 }
             }
-        }, i * 150);
+        }, i * 100);
     }
 
     if (WORD == userWord) return true;
     return false;
 
-}
-
-function displayAboutDialogue() {
-
-    document.getElementById("about-bg").style.display = "block";
-    document.getElementById("close-btn").addEventListener("click", () => {
-        document.getElementById("about-bg").style.display = "none";
-    })
 }
 
 function displayNotEnoughWarning() {

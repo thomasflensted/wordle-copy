@@ -82,6 +82,8 @@ function finishGame(gameWon, totalUserActions) {
 
 function handleEnter(totalUserActions, userWord, keyBoardButtons) {
     const currentTile = document.getElementById(totalUserActions); // all tiles have IDs numbered 1-25 in the HTML
+    const enterTile = document.getElementById("enter");
+    animateButtonClick(enterTile);
     const tileRow = currentTile.parentElement.children; // get all tiles in current row. parent is the row, so children are all tiles in the row
     const gameWon = paintTiles(tileRow, userWord, keyBoardButtons); // check userWord agaainst WORD and return true if they are the same, else return false
     return gameWon;
@@ -157,16 +159,9 @@ function getCurrentRow(num) {
     return parseInt(rowID.charAt(rowID.length - 1));
 }
 
-function animateBoardTile(tile) {
-    tile.classList.add("clicked");
-    setTimeout(() => {
-        tile.classList.remove("clicked");
-    }, 100);
-}
-
 function updateBoardTile(tile, val) {
     tile.innerHTML = val;
-    animateBoardTile(tile);
+    animateButtonClick(tile);
 }
 
 function animateButtonClick(button) {

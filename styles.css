@@ -127,9 +127,9 @@ body {
     background-color: var(--opaque-background);
     color: var(--foreground-color);
     border: var(--border);
-    padding: .5rem 2.5rem;
+    padding: .3rem 2rem;
     border-radius: 10px;
-    top: 36.25%;
+    top: 36.78%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: shake .25s;

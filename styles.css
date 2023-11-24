@@ -1,19 +1,23 @@
 :root {
     --tileSize: 60px;
-    --gap: 3px;
+    --gap: 5px;
     --corner: 3px;
 }
 
-[data-theme="light"] {
+[theme="light"] {
     --background-color: #e8e3e3;
-    --foreground-color: #25262a;
-    --border: 1px solid #25262a;
+    --foreground-color: #1e272e;
+    --opaque-background: rgb(250 250 250 / 85%);
+    --border: 1px solid #1e272e;
+    --hover-color: #e2dada;
 }
 
-[data-theme="dark"] {
-    --background-color: #25262a;
+[theme="dark"] {
+    --background-color: #1e272e;
     --foreground-color: #e8e3e3;
+    --opaque-background: rgb(30 39 46 / 85%);
     --border: 1px solid #e8e3e3;
+    --hover-color: #222d35;
 }
 
 html {
@@ -120,8 +124,9 @@ body {
 
 .not-enough-container {
     position: absolute;
-    background-color: rgb(0, 0, 0, .75);
-    color: var(--background-color);
+    background-color: var(--opaque-background);
+    color: var(--foreground-color);
+    border: var(--border);
     padding: .5rem 2.5rem;
     border-radius: 10px;
     top: 36.25%;
@@ -143,9 +148,10 @@ body {
 }
 
 .btn {
+    color: var(--foreground-color);
     background: none;
     outline: none;
-    border: 1px solid black;
+    border: var(--border);
     padding: .75rem 2rem;
     border-radius: 5px;
     cursor: pointer;
@@ -179,7 +185,7 @@ body {
 .opaque-cover {
     width: 100%;
     height: 100vh;
-    background: rgb(250 250 250 / 85%);
+    background: var(--opaque-background);
     z-index: 100;
     position: absolute;
     left: 50%;
@@ -196,9 +202,10 @@ body {
 }
 
 .about {
+    color: var(--foreground-color);
     width: 30%;
     border: 1px solid var(--foreground-color);
-    background: rgb(255, 255, 255, .75);
+    background: var(--opaque-background);
     font-size: 1.5rem;
     border-radius: 10px;
     line-height: 3.5rem;
@@ -213,6 +220,7 @@ body {
 
 .game-over-message {
     font-size: 3rem;
+    color: var(--foreground-color);
 }
 
 .game-over {
@@ -241,7 +249,11 @@ p {
 }
 
 a {
-    color: black;
+    color: var(--foreground-color);
+}
+
+i {
+    color: var(--foreground-color);
 }
 
 .keyboard {
@@ -254,7 +266,7 @@ a {
 }
 
 .key-tile {
-    margin: .1rem;
+    margin: .2rem;
 }
 
 #enter {
@@ -269,7 +281,7 @@ a {
 
 .key-tile:not(.letter-not-included):hover {
     cursor: pointer;
-    background-color: #f5f6fa;
+    background-color: var(--hover-color);
 }
 
 .darkmode-btn {
@@ -299,6 +311,13 @@ a {
 
 .darkmode-slider:hover {
     left: 14px;
+}
+
+.sun-moon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
 }
 
 @keyframes shake {

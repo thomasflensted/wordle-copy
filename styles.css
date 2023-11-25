@@ -315,8 +315,8 @@ i {
 
 .sun-moon {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 35px;
+    right: 30px;
     text-align: center;
 }
 
@@ -340,4 +340,24 @@ i {
     100% {
         transform: translate(-48%, -50%);
     }
+}
+
+@media only screen and (max-width: 600px) {
+    .heading {
+        font-size: 2rem;
+        margin: 3rem;
+    }
+
+    .keyboard {
+        margin: 2rem 0 0 0;
+    }
+
+    .about {
+        width: 80%;
+    }
+
+    .game-over-message {
+        font-size: 2rem;
+    }
+
 }

@@ -19,6 +19,6 @@ Right now, the game does not look good on mobile.
 
 I think this is because the event listener has been added to the button, but not to the i element inside the button. Solution: Add event listener to the i element and make it simulate a click on its parent element, the button.
 
-### One specific edge case is not handled properly by the word checking algorithm
+### Event listeners are still active behind game over screen
 
-Example: If the word to be guessed is CLAMP and the user guesses ALARM, the first A will turn orange and the second A will turn green, making it look like the word includes to A's. The simple solution would be to create two seperate loops: One to check for greens and another to check for oranges and greys. This would however mean the greens would animate on before orange and grey, but this could be solved by storing the values in an array and then animating them on thereafter. I do, however, think there is a better algorithmic solution thta I haven't been able to comoe up with yet. 
+The user can still use backspace, letters and enter after a game has finished. All event listeners have to be disabled at game over.

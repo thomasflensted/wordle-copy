@@ -89,8 +89,6 @@ function getTileColors(guess) {
                 duplicateCheck = duplicateCheck.replace(guess[i], "");
                 tileColorList[i] = "orange";
             } else {
-                const letterButton = getCorrectLetterButton(guess[i], keyBoardButtons);
-                letterButton.classList.add("gray");
                 tileColorList[i] = "gray";
             }
         }
@@ -114,7 +112,7 @@ function handleEnter(userWord, totalUserActions) {
     animateButtonClick(document.getElementById("enter"));
     const tileColors = getTileColors(userWord);
     const row = getCurrentRow(totalUserActions);
-    paintTiles(tileColors, row);
+    paintTiles(tileColors, row, userWord);
     return userWord == WORD;
 
 }
@@ -140,11 +138,15 @@ function displayGameOverMessage(msg, word) {
     document.getElementById("game-over-screen").style.display = "block";
 }
 
-function paintTiles(tileColors, tileRow) {
+function paintTiles(tileColors, tileRow, word) {
 
     for (let i = 0; i < ROW_LENGTH; i++) {
         setTimeout(() => {
             tileRow[i].classList.add(tileColors[i]);
+            if (tileColors[i] == "gray") {
+                const letterButton = getCorrectLetterButton(tileRow[i].innerHTML, keyBoardButtons);
+                letterButton.classList.add("gray");
+            }
         }, i * 100);
     }
 

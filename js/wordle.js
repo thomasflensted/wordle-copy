@@ -1,17 +1,18 @@
 const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
+const ROW_LENGTH = 5;
+const MAX_ACTIONS = 25;
 
-const keyBoardButtons = document.getElementsByClassName("key-tile"); // all keyboard buttons
-var userWord = ""; // letters clicked by user is appended to this string
-var totalUserActions = 0; // this counter keeps track of the board tile the user is currently at
+var userWord = "";
+var totalUserActions = 0;
 
 document.body.addEventListener("keydown", function handleKeyDown(e) {
 
-    // extract and capitalise character from keydown event
+    const keyBoardButtons = document.getElementsByClassName("key-tile");
     const letter = e.key.toUpperCase();
 
     // handle letter
-    if (keyIsLetter(letter) && userWord.length < 5) {
+    if (keyIsLetter(letter) && userWord.length < ROW_LENGTH) {
         totalUserActions++;
         userWord = handleLetter(userWord, letter, keyBoardButtons, totalUserActions);
     }
@@ -24,34 +25,28 @@ document.body.addEventListener("keydown", function handleKeyDown(e) {
 
     // handle enter
     if (letter == "ENTER") {
-        if (userWord.length < 5) {
+        if (userWord.length < ROW_LENGTH) {
             displayNotEnoughWarning();
         } else {
-            const gameWon = handleEnter(totalUserActions, userWord, keyBoardButtons);
-            const gameOver = finishGame(gameWon, totalUserActions, userWord);
-            if (!gameOver) userWord = "";
+            const gameWon = handleEnter(userWord, totalUserActions)
+            if (!gameWon && totalUserActions < MAX_ACTIONS) {
+                userWord = "";
+            } else {
+                finishGame(gameWon);
+            }
         }
     }
 });
 
+const keyBoardButtons = document.getElementsByClassName("key-tile");
 for (let i = 0; i < keyBoardButtons.length; i++) {
     keyBoardButtons[i].addEventListener("click", function handleMouseClick(e) {
 
         const letter = e.target.innerHTML;
 
-        if (keyIsLetter(letter) && userWord.length < 5) {
+        if (keyIsLetter(letter) && userWord.length < ROW_LENGTH) {
             totalUserActions++;
             userWord = handleLetter(userWord, letter, keyBoardButtons, totalUserActions);
-        }
-
-        if (letter == "ENTER") {
-            if (userWord.length < 5) {
-                displayNotEnoughWarning();
-            } else {
-                const gameWon = handleEnter(totalUserActions, userWord, keyBoardButtons);
-                const gameOver = finishGame(gameWon, totalUserActions, userWord);
-                if (!gameOver) userWord = "";
-            }
         }
 
         if (e.target.id == "backspace") {
@@ -60,33 +55,66 @@ for (let i = 0; i < keyBoardButtons.length; i++) {
                 totalUserActions--;
             }
         }
+
+        if (letter == "ENTER") {
+            if (userWord.length < ROW_LENGTH) {
+                displayNotEnoughWarning();
+            } else {
+                const gameWon = handleEnter(userWord, totalUserActions)
+                finishGame(gameWon, totalUserActions);
+                if (!gameWon) userWord = "";
+            }
+        }
+
     })
 }
 
-function finishGame(gameWon, totalUserActions) {
+function getTileColors(guess) {
+
+    var duplicateCheck = WORD;
+    var tileColorList = Array(5).fill(null);
+
+    for (let i = 0; i < 5; i++) {
+        if (WORD[i] === guess[i]) {
+            tileColorList[i] = "green";
+            duplicateCheck = duplicateCheck.replace(WORD[i], "");
+        }
+    }
+
+    for (let i = 0; i < 5; i++) {
+        if (tileColorList[i] == null) {
+            if (duplicateCheck.includes(guess[i])) {
+                duplicateCheck = duplicateCheck.replace(guess[i], "");
+                tileColorList[i] = "orange";
+            } else {
+                tileColorList[i] = "gray";
+            }
+        }
+    }
+
+    return tileColorList;
+
+}
+
+function finishGame(gameWon) {
     if (gameWon) {
         setTimeout(() => {
             displayGameOverMessage("Yay! You guessed it!", "");
-            return true;
         }, 750);
     } else {
-        if (totalUserActions == 25) {
-            setTimeout(() => {
-                displayGameOverMessage("Better luck next time!", WORD);
-                return true;
-            }, 750);
-        }
+        setTimeout(() => {
+            displayGameOverMessage("Better luck next time!", WORD);
+        }, 750);
     }
-    return false;
 }
 
-function handleEnter(totalUserActions, userWord, keyBoardButtons) {
-    const currentTile = document.getElementById(totalUserActions); // all tiles have IDs numbered 1-25 in the HTML
-    const enterTile = document.getElementById("enter");
-    animateButtonClick(enterTile);
-    const tileRow = currentTile.parentElement.children; // get all tiles in current row. parent is the row, so children are all tiles in the row
-    const gameWon = paintTiles(tileRow, userWord, keyBoardButtons); // check userWord agaainst WORD and return true if they are the same, else return false
-    return gameWon;
+function handleEnter(userWord, totalUserActions) {
+    animateButtonClick(document.getElementById("enter"));
+    const tileColors = getTileColors(userWord);
+    const row = getCurrentRow(totalUserActions);
+    paintTiles(tileColors, row);
+    return userWord == WORD;
+
 }
 
 function handleLetter(userWord, letter, keyBoardButtons, totalUserActions) {
@@ -110,32 +138,13 @@ function displayGameOverMessage(msg, word) {
     document.getElementById("game-over-screen").style.display = "block";
 }
 
-function paintTiles(tileRow, userWord, buttons) {
+function paintTiles(tileColors, tileRow) {
 
-    var duplicateCheck = WORD;
-    var includedLetters = "";
-    for (let i = 0; i < userWord.length; i++) {
+    for (let i = 0; i < ROW_LENGTH; i++) {
         setTimeout(() => {
-            var currentLetter = userWord[i];
-            if (currentLetter == WORD[i]) {
-                tileRow[i].classList.add("letter-correct-spot");
-                duplicateCheck = duplicateCheck.replace(currentLetter, "");
-                includedLetters += currentLetter;
-            } else if (WORD.includes(currentLetter) && duplicateCheck.includes(currentLetter)) {
-                tileRow[i].classList.add("letter-not-correct-spot");
-                duplicateCheck = duplicateCheck.replace(currentLetter, "");
-                includedLetters += currentLetter;
-            } else {
-                tileRow[i].classList.add("letter-not-included");
-                const keyButton = getCorrectLetterButton(currentLetter, buttons);
-                if (!includedLetters.includes(currentLetter)) {
-                    keyButton.classList.add("letter-not-included");
-                }
-            }
+            tileRow[i].classList.add(tileColors[i]);
         }, i * 100);
     }
-
-    return WORD == userWord;
 
 }
 
@@ -154,9 +163,8 @@ function deleteLetterFromTileAndUpdateWord(currentTile, word) {
     return word.substring(0, word.length - 1);
 }
 
-function getCurrentRow(num) {
-    const rowID = document.getElementById(num).parentElement.id;
-    return parseInt(rowID.charAt(rowID.length - 1));
+function getCurrentRow(totalUserActions) {
+    return document.getElementById(totalUserActions).parentElement.children;
 }
 
 function updateBoardTile(tile, val) {

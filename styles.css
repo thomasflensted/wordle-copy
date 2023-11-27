@@ -276,7 +276,7 @@ i {
 
 .clicked:not(.gray) {
     transform: scale(.95);
-    background: var(--background-color);
+    background: var(--hover-color);
 }
 
 .key-tile:not(.gray):hover {

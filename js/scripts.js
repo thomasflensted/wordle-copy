@@ -6,6 +6,11 @@ document.getElementById("try-again").addEventListener("click", () => {
     location.reload();
 });
 
+const backspace = document.getElementById("backspace-icon");
+backspace.addEventListener("click", () => {
+    backspace.parentElement.click();
+})
+
 function displayAboutDialogue() {
 
     document.getElementById("about-bg").style.display = "block";

@@ -3,12 +3,12 @@ const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 const ROW_LENGTH = 5;
 const MAX_ACTIONS = 25;
 
+const keyBoardButtons = document.getElementsByClassName("key-tile");
 var userWord = "";
 var totalUserActions = 0;
 
 document.body.addEventListener("keydown", function handleKeyDown(e) {
 
-    const keyBoardButtons = document.getElementsByClassName("key-tile");
     const letter = e.key.toUpperCase();
 
     // handle letter
@@ -38,7 +38,6 @@ document.body.addEventListener("keydown", function handleKeyDown(e) {
     }
 });
 
-const keyBoardButtons = document.getElementsByClassName("key-tile");
 for (let i = 0; i < keyBoardButtons.length; i++) {
     keyBoardButtons[i].addEventListener("click", function handleMouseClick(e) {
 
@@ -61,8 +60,11 @@ for (let i = 0; i < keyBoardButtons.length; i++) {
                 displayNotEnoughWarning();
             } else {
                 const gameWon = handleEnter(userWord, totalUserActions)
-                finishGame(gameWon, totalUserActions);
-                if (!gameWon) userWord = "";
+                if (!gameWon && totalUserActions < MAX_ACTIONS) {
+                    userWord = "";
+                } else {
+                    finishGame(gameWon);
+                }
             }
         }
 
@@ -72,28 +74,28 @@ for (let i = 0; i < keyBoardButtons.length; i++) {
 function getTileColors(guess) {
 
     var duplicateCheck = WORD;
-    var tileColorList = Array(5).fill(null);
+    var tileColorList = Array(ROW_LENGTH).fill(null);
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < ROW_LENGTH; i++) {
         if (WORD[i] === guess[i]) {
             tileColorList[i] = "green";
             duplicateCheck = duplicateCheck.replace(WORD[i], "");
         }
     }
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < ROW_LENGTH; i++) {
         if (tileColorList[i] == null) {
             if (duplicateCheck.includes(guess[i])) {
                 duplicateCheck = duplicateCheck.replace(guess[i], "");
                 tileColorList[i] = "orange";
             } else {
+                const letterButton = getCorrectLetterButton(guess[i], keyBoardButtons);
+                letterButton.classList.add("gray");
                 tileColorList[i] = "gray";
             }
         }
     }
-
     return tileColorList;
-
 }
 
 function finishGame(gameWon) {

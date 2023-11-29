@@ -1,4 +1,4 @@
-const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
+const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL", "ANVIL", "LEARN", "STAKE", "ZEBRA", "QUILT"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 const ROW_LENGTH = 5;
 const MAX_ACTIONS = 30;
@@ -140,10 +140,12 @@ function displayGameOverMessage(msg, word) {
 
 function paintTiles(tileColors, tileRow, word) {
 
+    var indcludedLetters = "";
     for (let i = 0; i < ROW_LENGTH; i++) {
+        if (tileColors[i] != "gray") indcludedLetters += word[i];
         setTimeout(() => {
             tileRow[i].classList.add(tileColors[i]);
-            if (tileColors[i] == "gray") {
+            if (tileColors[i] == "gray" && !indcludedLetters.includes(word[i])) {
                 const letterButton = getCorrectLetterButton(tileRow[i].innerHTML, keyBoardButtons);
                 letterButton.classList.add("gray");
             }

@@ -345,7 +345,7 @@ i {
 @media only screen and (max-width: 600px) {
     .heading {
         font-size: 2rem;
-        margin: 3rem;
+        margin: 2rem;
     }
 
     .keyboard {
@@ -363,6 +363,10 @@ i {
     .tile-container,
     .tile-row {
         gap: 3px;
+    }
+
+    .tile-container {
+        margin-top: 3rem;
     }
 
     .key-tile {

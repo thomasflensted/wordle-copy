@@ -1,7 +1,7 @@
 const WORDS = ["HELLO", "STARE", "BRACE", "DRIFT", "FLOSS", "CRASH", "BRIEF", "ALARM", "EQUAL"];
 const WORD = WORDS[Math.floor(Math.random() * WORDS.length)];
 const ROW_LENGTH = 5;
-const MAX_ACTIONS = 25;
+const MAX_ACTIONS = 30;
 
 const keyBoardButtons = document.getElementsByClassName("key-tile");
 var userWord = "";

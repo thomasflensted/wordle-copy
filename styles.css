@@ -169,11 +169,11 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    border: 2px solid var(--foreground-color);
+    border: 1px solid var(--foreground-color);
     padding: .4rem .8rem;
     border-radius: 50%;
     color: var(--foreground-color);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     cursor: pointer;
 }
 
@@ -270,7 +270,7 @@ i {
 }
 
 #enter {
-    font-size: 1.25rem !important;
+    font-size: 1.25rem;
     letter-spacing: .1rem;
 }
 
@@ -315,7 +315,7 @@ i {
 
 .sun-moon {
     position: absolute;
-    top: 35px;
+    top: 33px;
     right: 30px;
     text-align: center;
 }
@@ -360,4 +360,16 @@ i {
         font-size: 2rem;
     }
 
+    .tile-container,
+    .tile-row {
+        gap: 3px;
+    }
+
+    .key-tile {
+        margin: 1px;
+    }
+
+    #enter {
+        font-size: 1rem;
+    }
 }

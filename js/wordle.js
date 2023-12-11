@@ -33,6 +33,7 @@ document.body.addEventListener("keydown", function handleKeyDown(e) {
                 userWord = "";
             } else {
                 finishGame(gameWon);
+                this.removeEventListener("keydown", handleKeyDown);
             }
         }
     }
@@ -64,6 +65,7 @@ for (let i = 0; i < keyBoardButtons.length; i++) {
                     userWord = "";
                 } else {
                     finishGame(gameWon);
+                    this.removeEventListener("keydown", handleKeyDown);
                 }
             }
         }
